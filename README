@@ -1,0 +1,33 @@
+CS 111
+Professor Reiher
+Lab 1A
+
+Jeffrey Tai 504147859
+Brian Chang 304151550
+
+Known limitations:
+1A)
+The program, as specified as the specs, will have either undefined behavior or an error when it comes to !, {, if, and function. My function will not handle breaks, continues, and exits. If a token is passed in which only contains digits, my program will create an error. Two nested subshells that do not have anything in between, “((“, will also create an error.
+
+Jeffrey handled creating the lists of input/output files from the commands, making the command stream, reading the command stream, and placing the operands and ops onto the stack. Brian handled the creation of the tokens, token streams, and handling all the cases of valid and invalid sequences.
+
+We had a strange error with the “error.h” library continually saying that “error.h file not found”. Despite attempting each one of the TA’s solutions and checking many alternate solutions online, the error was still there. Instead of using the error(… , … , …) function, we used the <stdio.h> library to allow the use of fprintf. We used fprintf to output to stderr the line number where the error occurred and a message to the user. We found this alternative to be acceptable as it is what the specs asked for. However, there may be errors with compiling alloc.c and main.c because they both directly use the error.h library.
+- In specific,
+static void memory_exhausted(int errnum) from the alloc.c file:
+We tried replacing “error (1, errnum, "memory exhausted”);” with “fprintf(stderr, "memory exhausted”);”, but we then got the error that the errnum parameter was not used.
+
+1B)
+Since this lab was relatively shorter and we just had to focus on the different types of commands, we worked on the entire lab together rather than each tackling a different part. One of the more difficult parts was looking up all the different libraries of system calls such as sys/types.h, unistd.h, stdio.h, sys/wait.h, sys/stat.h, and fcntl.h. Furthermore, we had to understand what the system calls did and what they returned, which made it a bit more difficult.
+
+Another thing about this project was that the TA still wasn't able to help me figure out as to why my #include <error.h> always gave me an error, despite the several solutions he offered in addition to many alternatives that I found online. In the end, I used the fprintf command and output my error to stderr. However, my code cannot compile on my platform itself, on Mac OS X, but I believe it runs on the SEASnet Linux servers.
+
+1C)
+Lab 1C was a bit confusing in the beginning about how we were supposed to do the time travel function but after working it all out, it was pretty straightforward. Our approach was to just go through the command list to find if there were any commands. If there were commands, we would find dependencies amongst the commands. Depending on the existence of dependencies, we would reassign our command lists. Then for each command that was ready to be run, we forked each command. If the forking was already in process, or in other words, the child process was already running, we would put the process to sleep until the forked child was no longer running.
+
+In this lab, we didn't split up the lab into divided work. We worked on the entire lab together. We found it to be more effective based on the previous lab because it was easier to put both our minds to work rather than splitting it up and attempting our own parts. Also, we were able to debug through our previous code and fix the many segmentation faults we had.
+
+We knew that our code is now correct because upon running the command "make check", the output was: "./test-p-bad.sh ./test-p-ok.sh".
+
+This entire lab gave us a much clearer perspective on how operating systems run processes on a computer, though obviously it is not nearly a wholesome view.
+
+
